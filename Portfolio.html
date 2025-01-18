@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maria Pinto | Data Science Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+     <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: url('header.jpg') no-repeat center center/cover;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            margin-bottom: 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #00ccff;
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .blue-bg {
+            background-color: #f0f8ff;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #003366;
+        }
+
+        /* Projects Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .grid div {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .grid div img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .grid div:hover {
+            transform: translateY(-10px);
+        }
+
+        .skills-used {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            justify-content: center;
+        }
+
+        .skills-used span {
+            background-color: #f0f8ff;
+            color: #003366;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+       /* Interactive Skills Bubbles */
+       .skill-bubble {
+            display: inline-block;
+             background-color: #174d83; /* Always keep the blue highlight */
+            color: white; /* White text for better visibility */
+            padding: 8px 15px; /* Adjust padding for better proportions */
+            border-radius: 25px;
+            margin: 5px;
+            font-size: 1rem; /* Larger font size for better emphasis */
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .skill-bubble.active {
+        background-color: #003366; /* Keep blue highlight */
+        color: white; /* Ensure text remains visible */
+        }
+
+        .skill-bubble:hover {
+        background-color: #002850; /* Slightly darker on hover */
+        }
+        .skill-bubble:hover {
+            background-color: #003366;
+            color: white;
+        }
+
+        .skill-details {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            display: none;
+            color: #003366;
+            font-size: 1rem;
+        }
+
+        .skill-details.hidden {
+            display: none;
+        }
+
+        .skill-details.visible {
+            display: block;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .skill {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /*Volunteering*/
+        .volunteering-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #f0f8ff;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .volunteering-item {
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .volunteering-item h3 {
+         margin-bottom: 10px;
+        color: #003366;
+        }
+
+        .volunteering-item p {
+        color: #333;
+        }
+        /* Contact Form */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        form label {
+            text-align: left;
+            font-weight: bold;
+        }
+
+        form input, form textarea, form button {
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+        form input, form textarea {
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form button {
+            background: #003366;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        form button:hover {
+            background: #005b99;
+        }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .social-link {
+            color: #003366;
+            font-size: 2rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: #1770ac;
+        }
+
+
+        /* Footer */
+        footer {
+            background: #003366;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+     <!-- Header Section -->
+     <header class="hero">
+        <h1>Maria Pinto</h1>
+        <p>Data Scientist| Python & QGIS Enthusiast</p>
+        <nav>
+            <ul>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#about">About Me</a></li>
+                <li><a href="#cv">CV</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+</body>
+</html>
+
+    <!-- About Me Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2>About Me</h2>
+            <p>Hello! I'm Maria Pinto, Proactive Junior Data Scientist with expertise in Python, PostgreSQL, and predictive modeling, passionate about simplifying complex
+                problems and delivering real-world solutions. Skilled in geospatial mapping, machine learning, and collaborative
+                problem-solving, with a proven track record of improving project efficiency and driving business impact. Adaptable and
+                continuously learning, with hands-on experience in deploying AI-driven solutions using cutting-edge tools.</p>
+        </div>
+    </section>
+
+    <!-- Interactive Skills Section -->
+    <section id="skills" class="section blue-bg">
+        <div class="container">
+            <h2>Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-bubble" onclick="showDetails('Python')">Python</div>
+                <div class="skill-bubble" onclick="showDetails('PostgresSQL')">PostgresSQL</div>
+                <div class="skill-bubble" onclick="showDetails('PowerBI')">PowerBI</div>
+                <div class="skill-bubble" onclick="showDetails('Tableau')">Tableau</div>
+                <div class="skill-bubble" onclick="showDetails('Excel')">Excel</div>
+                <div class="skill-bubble" onclick="showDetails('Statistical Modelling')">Statistical Modelling</div>
+                <div class="skill-bubble" onclick="showDetails('Advance Mathematics')">Advance Mathematics</div>
+                <div class="skill-bubble" onclick="showDetails('QGIS')">QGIS</div>
+                <div class="skill-bubble" onclick="showDetails('Jupyter Notebooks')">Jupyter Notebooks</div>
+                <div class="skill-bubble" onclick="showDetails('MachineLearning')">Machine Learning</div>
+            </div>
+            <div id="skill-details" class="skill-details hidden"></div>
+        </div>
+    </section>
+
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <div class="container">
+            <h2>Projects</h2>
+            <div id="projects-grid" class="grid">
+                <div>
+                    <img src="chrun analysis.webp" alt="Customer Churn Analysis">
+                    <h3>Customer Churn Prediction: End-to-End Machine Learning Project</h3>
+                    <div class="skills-used">
+                        <span>Python</span>
+                        <span>REST APIs</span>
+                        <span>Power BI</span>
+                        <span>Machine Learning</span>
+                    </div>
+                    <p>Comprehensive analysis to understand customer retention and churn patterns using advanced visualizations </p>
+                    <a href="https://github.com/MariaPinto85/End-to-End-Machine-Learning-Project" target="_blank">View Repository</a>
+                </div>
+                <div>
+                    <img src="landscape.webp" alt="Landslide Susceptibility Analysis">
+                    <h3>Landslide Susceptibility Analysis</h3>
+                    <div class="skills-used">
+                        <span>Python</span>
+                        <span>Geospatial Analysis</span>
+                        <span>Machine Learning</span>
+                    </div>
+                    <p>Predicting landslide risks using geospatial data and machine learning techniques.</p>
+                    <a href="https://github.com/MariaPinto85/Landslide-Susceptibility-Analysis" target="_blank">View Repository</a>
+                </div>
+                <div>
+                    <img src="Liver.webp" alt="Liver Disease Prediction Analysis">
+                    <h3>Liver Disease Prediction Analysis</h3>
+                    <div class="skills-used">
+                        <span>Python</span>
+                        <span>Data Analysis</span>
+                        <span>Healthcare</span>
+                    </div>
+                    <p>Developing models to predict liver disease based on clinical data.</p>
+                    <a href="https://github.com/MariaPinto85/Liver-Disease-Prediction-Analysis" target="_blank">View Repository</a>
+                </div>
+                <div>
+                    <img src="solar.webp" alt="Solar Energy Power Generation">
+                    <h3>Solar Energy Power Generation</h3>
+                    <div class="skills-used">
+                        <span>Python</span>
+                        <span>Time-Series Analysis</span>
+                        <span>Forecasting</span>
+                    </div>
+                    <p>Analyzing and forecasting solar power generation using time-series data.</p>
+                    <a href="https://github.com/MariaPinto85/Solar-Energy-Power-Generation" target="_blank">View Repository</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Volunteering Work Section -->
+<section id="volunteering" class="section">
+    <div class="container">
+        <h2>Volunteering Work</h2>
+        <div class="volunteering-container">
+            <div class="volunteering-item">
+                <h3> YouthMappers</h3>
+                <p>Unmapped Kenya initiative, I mapped uncharted building and road geometries in Nyeri (Town) Sub-County by verifying AI-predicted data and using RapiD and JOSM, thereby ensuring overall high-quality standards, proper alignment, and community accessibility.</p>
+            </div>
+            <div class="volunteering-item">
+                <h3>The Cameron Foundation - Flexible Tech Support</h3>
+                <p>Integrated Google Maps API for address validation and geocoding, developed geospatial tools to streamline mapping workflows and boundary assessments, and provided deployment instructions for non-technical teams.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+     <!-- CV Section -->
+     <section id="cv" class="section blue-bg">
+        <div class="container">
+            <h2>My CV</h2>
+            <p>Click the button below to download my CV and learn more about my professional experience and skills.</p>
+            <a href="Maria_Pinto_CV.pdf" download>
+                <button>Download CV</button>
+            </a>
+        </div>
+    </section>
+    
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2>Contact Me</h2>
+            <div class="social-icons">
+                <a href="https://github.com/MariaPinto85" target="_blank" class="social-link">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="www.linkedin.com/in/mariafp" target="_blank" class="social-link">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+            <form id="contact-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+    
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 Maria Pinto. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function showDetails(skill) {
+            const details = {
+                Python: 'Pandas, Numpy, Matplotlib, Seaborn, Flask, Scikit-learn',
+                PostgresSQL: 'Experience with complex queries, database design, and data extraction.',
+                PowerBI: 'Interactive dashboards, reporting, advanced data visualization and DAX .',
+                Tableau: 'Storytelling with interactive visual dashboards.',
+                Excel: 'Advanced functions ( Pivot Tables, V-Lookups, XLOOKUP), macros and data analysis.',
+                'Statistical Modelling': 'Regression, predictive models, and time-series analysis.',
+                'Advance Mathematics': 'MSc Mathematics - Calculus of Variations and Advanced Calculus, Approximation Theory, Galois Theory, Nonlinear Ordinary Differential Equations, Advanced Mathematical Methods',
+                QGIS: 'Geospatial data analysis and mapping.',
+                'Jupyter Notebooks': 'Interactive coding and data visualization.',
+                MachineLearning: 'Random Forest, Decision tree, Logistic regression, Gradient Boosting, Supervised/Unsupervised, Naive Bayes'
+            };
+
+            const skillDetails = document.getElementById('skill-details');
+            skillDetails.innerText = details[skill];
+            skillDetails.classList.remove('hidden');
+            skillDetails.classList.add('visible');
+        }
+    </script>
+</body>
+</html>
