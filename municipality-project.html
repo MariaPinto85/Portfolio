@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#344b4e">
+  <meta name="description" content="Case study: screening 90 Portuguese municipalities for elderly-care service opportunities using Power BI, demographic indicators and data-quality controls.">
+  <title>Municipality Screening | Maria Pinto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#283238;--cream:#f5f3ef;--paper:#fffefc;--muted:#667174;--teal:#3e6667;--line:#dfe5e1;--sans:'DM Sans',Arial,sans-serif;--serif:'DM Serif Display',Georgia,serif}
+    *,*:before,*:after{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.7 var(--sans)}a{color:inherit}a:focus-visible{outline:3px solid #cb8a6d;outline-offset:4px} .container{width:min(1140px,calc(100% - 9vw));margin-inline:auto}
+    .eyebrow{text-transform:uppercase;font-size:.72rem;letter-spacing:.19em;font-weight:700}.display{font-family:var(--serif);font-weight:400;letter-spacing:-.035em;line-height:1.08}.nav{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:25px 0}.brand{text-decoration:none;font:400 1.4rem var(--serif)}.navlinks{display:flex;flex-wrap:wrap;gap:22px;align-items:center;font-size:.85rem;font-weight:700}.navlinks a{text-decoration:none}.navlinks a:hover{text-decoration:underline}.navlinks .back{border:1px solid #9ab0ab;padding:8px 12px}
+    .hero{background:#344b4e;color:#f7f7f2;overflow:hidden}.hero-inner{display:grid;grid-template-columns:1.1fr .9fr;gap:65px;align-items:center;padding:95px 0 110px}.hero .eyebrow{color:#c2d6d3}.hero h1{font-size:clamp(3.1rem,6vw,6.5rem);margin:19px 0 22px}.hero p{color:#dce8e4;max-width:620px}.hero .lead{font-size:1.12rem;line-height:1.9}.hero-art{position:relative;background:#dce8e2;color:#2d4f51;min-height:385px;padding:27px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:18px 18px 0 #ffffff13;overflow:hidden}.hero-art::before{content:'';position:absolute;width:360px;height:360px;border:62px solid #c3d6ce;border-radius:50%;right:-140px;top:-170px}.hero-art .micro{display:flex;justify-content:space-between;gap:8px;position:relative;z-index:1;font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}.art-big{font:400 9rem/.9 var(--serif);letter-spacing:-.07em;position:relative;z-index:1}.art-sub{font:400 1.75rem/1.2 var(--serif);position:relative;z-index:1;margin-top:5px}.art-tags{display:flex;flex-wrap:wrap;gap:7px;position:relative;z-index:1}.art-tags span{border:1px solid #9aafa9;padding:6px 9px;font-size:.72rem}.art-note{position:relative;z-index:1;font-size:.67rem;color:#4a6766;margin:6px 0 0}
+    .facts{border-bottom:1px solid var(--line);background:#eaf0ed}.facts-inner{display:grid;grid-template-columns:repeat(3,1fr)}.fact{padding:24px 26px;border-right:1px solid #cbd7d2}.fact:first-child{padding-left:0}.fact:last-child{border:0}.fact span{font-size:.69rem;text-transform:uppercase;letter-spacing:.12em;color:#5c7775;font-weight:700}.fact strong{display:block;font:400 1.36rem var(--serif);margin:3px 0 0}
+    .section{padding:85px 0}.section.tint{background:var(--cream)}.section .eyebrow{color:#748987}.section h2{font-size:clamp(2.4rem,4vw,4.15rem);margin:10px 0 25px}.section-lead{font-size:1.12rem;max-width:830px;color:#4f5c5e}.section p{color:#5c686b}.columns{display:grid;grid-template-columns:1fr 1fr;gap:55px}.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:19px;margin-top:38px}.pillar{padding:32px;background:#fff;border:1px solid var(--line)}.pillar .idx{font-size:.67rem;letter-spacing:.17em;color:#a36f5b;font-weight:700}.pillar h3{font:400 1.8rem/1.15 var(--serif);margin:11px 0}.pillar p{font-size:.91rem;margin-bottom:0}.workflow{display:grid;grid-template-columns:repeat(5,1fr);gap:13px;margin-top:38px}.step{background:#e6eeeb;padding:25px 20px;min-height:150px;border-top:3px solid #5d8988}.step em{font-size:.72rem;font-style:normal;color:#6d8582;letter-spacing:.12em}.step strong{display:block;font:400 1.35rem/1.2 var(--serif);margin-top:14px}.step p{margin:9px 0 0;font-size:.81rem}
+    .checks{margin:0;padding:0;list-style:none}.checks li{border-bottom:1px solid var(--line);padding:16px 0}.checks li:first-child{border-top:1px solid var(--line)}.checks strong{color:#344a4b}.note{background:#e6edeb;padding:28px 32px;border-left:3px solid #789895}.note strong{display:block;font:400 1.56rem var(--serif);margin-bottom:7px}.note p{margin:0}.tool-tags{display:flex;flex-wrap:wrap;gap:9px;margin:23px 0 0}.tool-tags span{background:#e7eeeb;padding:8px 14px;font-size:.8rem;font-weight:700;color:#3f6161}.cta{background:#344b4e;color:white;text-align:center;padding:70px 0}.cta h2{font:400 clamp(2.2rem,4vw,3.7rem)/1.12 var(--serif);margin:10px 0 26px}.cta a{display:inline-block;text-decoration:none;border:1px solid #b4c8c2;padding:14px 20px;font-size:.86rem;font-weight:700}.cta a:hover{background:#ffffff1b}.footer{padding:28px 0 45px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;font-size:.78rem;color:#657271}.footer a{font-weight:700;text-decoration:none}
+    @media(max-width:900px){.hero-inner{gap:35px;padding:68px 0}.hero-art{min-height:350px}.pillars{grid-template-columns:1fr}.workflow{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:700px){.container{width:calc(100% - 42px)}.nav{align-items:flex-start;flex-direction:column}.navlinks{gap:13px}.hero-inner,.columns{grid-template-columns:1fr}.hero-inner{padding:50px 0 68px}.hero-art{min-height:340px;max-width:500px}.hero h1{font-size:clamp(3.1rem,11vw,4.7rem)}.facts-inner{grid-template-columns:1fr}.fact{padding:13px 0;border-right:0;border-bottom:1px solid #cbd7d2}.section{padding:63px 0}.workflow{grid-template-columns:1fr 1fr}}
+    @media(max-width:420px){.workflow{grid-template-columns:1fr}.hero-art{min-height:330px;padding:21px}.art-big{font-size:7.5rem}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+    /* Language switcher uses contrast appropriate for the pale header. */
+    .language-switch{display:inline-flex;align-items:center;gap:2px;flex-shrink:0;padding:4px;border-radius:999px;border:1px solid #b9cdca;background:#eaf1ef}
+    .lang-button{border:0;border-radius:999px;background:transparent;color:#3b6162;padding:6px 10px;font:700 .76rem/1.2 var(--sans);cursor:pointer;min-width:40px}
+    .lang-button[aria-pressed="true"]{background:#344b4e;color:#fff;box-shadow:0 1px 5px #00000018}
+    .lang-button:focus-visible{outline:3px solid #cb8a6d;outline-offset:2px}
+
+
+    /* Original Power BI executive dashboard, displayed without cropping */
+    .dashboard-showcase{margin:58px 0 0;padding:0}
+    .dashboard-heading{display:flex;align-items:end;justify-content:space-between;gap:25px;margin-bottom:22px}
+    .dashboard-heading h3{font-size:clamp(2rem,3.3vw,3.2rem);margin:9px 0 10px}
+    .dashboard-heading p{max-width:730px;margin:0;color:#5b6969}
+    .dashboard-open{white-space:nowrap;border-bottom:1px solid #799994;padding-bottom:5px;color:#365c5d;text-decoration:none;font-weight:700;font-size:.84rem}
+    .dashboard-open:hover{color:#1b3435;border-color:#1b3435}
+    .dashboard-image-link{display:block;border:1px solid #dce4de;padding:9px;background:#f1f5f2;text-decoration:none;box-shadow:0 14px 40px #233b3815}
+    .dashboard-image{display:block;width:100%;height:auto;object-fit:contain;background:white}
+    .dashboard-showcase figcaption{font-size:.84rem;line-height:1.8;color:#6a7776;margin-top:16px}
+    @media(max-width:700px){.dashboard-showcase{margin-top:40px}.dashboard-heading{display:block}.dashboard-open{display:inline-block;margin-top:15px;white-space:normal}.dashboard-image-link{padding:3px}}
+
+    /* Responsive gallery of original Power BI report screenshots */
+    .dashboard-gallery-intro{display:flex;justify-content:space-between;align-items:end;gap:26px;margin:85px 0 23px;padding-top:30px;border-top:1px solid var(--line)}
+    .dashboard-gallery-intro h3{font-size:clamp(2rem,3.6vw,3.55rem);margin:11px 0 13px}
+    .dashboard-gallery-intro p{max-width:790px;margin:0;color:#5b6969}
+    .dashboard-gallery-hint{white-space:nowrap;font-size:.78rem;color:#496d69;font-weight:700;padding-bottom:5px}
+    .dashboard-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:25px;align-items:stretch}
+    .dashboard-gallery-card{min-width:0;min-height:100%;margin:0;border:1px solid #dee5df;background:#fcfdfb;box-shadow:0 11px 26px #233b380c;display:flex;flex-direction:column}
+    .dashboard-gallery-card .dashboard-image-link{position:relative;border:0;box-shadow:none;padding:9px;margin:0;overflow:hidden;background:#e9efed;cursor:zoom-in}
+    .dashboard-gallery-card .dashboard-image{width:100%;height:auto;aspect-ratio:2048/1155;object-fit:contain;object-position:center;transition:transform .25s ease}
+    .dashboard-gallery-card .dashboard-image-link:hover img{transform:scale(1.014)}
+    .image-action{position:absolute;right:19px;bottom:19px;padding:8px 12px;color:#fff;background:#294449ec;font-size:.73rem;letter-spacing:.015em;font-weight:700}
+    .dashboard-gallery-card figcaption{padding:23px 25px 26px;flex:1}
+    .dashboard-gallery-card figcaption h4{font:400 clamp(1.5rem,2.2vw,2rem)/1.19 var(--serif);margin:0 0 10px;color:var(--ink)}
+    .dashboard-gallery-card figcaption p{font-size:.9rem;line-height:1.8;margin:0;color:#5c686b}
+    .dashboard-static-note{font-size:.82rem;margin:23px 0 0;color:#637375}
+    /* Native lightbox, with ordinary image links as progressive enhancement fallback */
+    .dashboard-lightbox{border:0;padding:0;background:#f7faf8;color:#243436;width:min(95vw,1550px);max-width:none;max-height:94dvh;box-shadow:0 22px 100px #0007}
+    .dashboard-lightbox::backdrop{background:#0b171bdd}
+    .dashboard-lightbox-inner{display:flex;flex-direction:column;max-height:94dvh}
+    .dashboard-lightbox-head{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:13px 20px;border-bottom:1px solid #dfe6e2}
+    .dashboard-lightbox-head span{font-size:.82rem;font-weight:700}
+    .dashboard-lightbox-close{border:1px solid #a7b7b2;background:#fff;padding:7px 13px;color:#344c4c;font:700 .8rem var(--sans);cursor:pointer}
+    .dashboard-lightbox img{display:block;max-width:100%;max-height:calc(94dvh - 116px);height:auto;width:auto;object-fit:contain;margin:auto}
+    .dashboard-lightbox p{font-size:.79rem;line-height:1.5;color:#556667;padding:10px 20px;margin:0}
+    @media(max-width:850px){.dashboard-gallery-intro{display:block;margin-top:64px}.dashboard-gallery-hint{display:block;margin-top:14px}.dashboard-gallery{gap:17px}.dashboard-gallery-card figcaption{padding:18px}}
+    @media(max-width:680px){.dashboard-gallery{grid-template-columns:1fr}.dashboard-gallery-card figcaption{padding:18px 20px 22px}.dashboard-gallery-intro{margin-top:55px}.dashboard-gallery-hint{white-space:normal}.dashboard-gallery-card .dashboard-image{aspect-ratio:auto}.image-action{right:14px;bottom:14px}.dashboard-lightbox{width:98vw}}
+    @media(prefers-reduced-motion:reduce){.dashboard-gallery-card .dashboard-image{transition:none}}
+  </style>
+</head>
+<body data-page="municipality">
+  <div class="container"><nav class="nav" aria-label="Site navigation"><a class="brand" href="index.html">Maria Pinto</a><div class="navlinks"><a href="index.html#work">Projects</a><a href="index.html#about">About</a><a href="index.html#contact">Contact</a><a class="back" href="index.html">← Back to portfolio</a><div class="language-switch" role="group" aria-label="Language"><button type="button" class="lang-button" data-lang="en" lang="en" aria-pressed="true" aria-label="View this page in English">EN</button><button type="button" class="lang-button" data-lang="pt-PT" lang="pt-PT" aria-pressed="false" aria-label="View this page in European Portuguese">PT</button></div></div></nav></div>
+  <main>
+    <header class="hero"><div class="container hero-inner">
+      <div><span class="eyebrow">Case study / Business intelligence · Portugal</span><h1 class="display">Where is elderly care needed most?</h1><p class="lead">A transparent screening framework to compare <strong>90 Portuguese municipalities</strong> and identify where further investigation of elderly-care services may be warranted.</p><p>Power BI · Power Query · DAX · Data governance · Spatial decision support</p></div>
+      <div class="hero-art" role="img" aria-label="Conceptual project illustration: 90 municipalities screened across demographic need, service provision gap and socioeconomic context; not a real dashboard or ranking"><div class="micro"><span>Screening framework</span><span>2024 snapshot</span></div><div><div class="art-big">90</div><div class="art-sub">municipalities<br>under review.</div></div><div><div class="art-tags"><span>Demographic need</span><span>Provision gap</span><span>Socioeconomic context</span></div><p class="art-note">Conceptual illustration — not project results</p></div></div>
+    </div></header>
+    <div class="facts"><div class="container facts-inner"><div class="fact"><span>Coverage</span><strong>90 municipalities</strong></div><div class="fact"><span>Data period</span><strong>2024 dataset</strong></div><div class="fact"><span>Output</span><strong>Prioritised candidate screening</strong></div></div></div>
+    <section class="section" aria-labelledby="problem"><div class="container"><span class="eyebrow">01 / The question</span><h2 id="problem" class="display">Turning a broad problem into a decision.</h2><div class="columns"><p class="section-lead">An ageing population does not, on its own, prove where a new elderly-care service should open. A useful first step is to compare need, existing provision and local context in a consistent way.</p><div><p><strong>Objective:</strong> rank municipalities for more detailed exploration — not claim that any one municipality is already a commercially viable location.</p><p><strong>Unit of analysis:</strong> one record per municipality, combining demographic, infrastructure and socioeconomic information into a documented analytical dataset.</p></div></div></div></section>
+    <section class="section tint" aria-labelledby="dimensions"><div class="container"><span class="eyebrow">02 / Scoring framework</span><h2 id="dimensions" class="display">Three dimensions, one shortlist.</h2><p class="section-lead">The model separates underlying need from gaps in current provision. Components are combined in a weighted screening score, with assumptions exposed for review.</p><div class="pillars"><article class="pillar"><span class="idx">DIMENSION 01</span><h3>Demographic need</h3><p>Older population share, ageing index, elderly population and population trends help describe where age-related pressure may be higher.</p></article><article class="pillar"><span class="idx">DIMENSION 02</span><h3>Provision gap</h3><p>ERPI, day-centre and home-support (SAD) capacity are considered relative to the older population, rather than relying on raw facility counts alone.</p></article><article class="pillar"><span class="idx">DIMENSION 03</span><h3>Socioeconomic context</h3><p>Local economic and infrastructure indicators add context to potential need and highlight where feasibility must be examined further.</p></article></div></div></section>
+    <section class="section" aria-labelledby="workflow"><div class="container"><span class="eyebrow">03 / Analytical process</span><h2 id="workflow" class="display">From raw data to review candidates.</h2><p class="section-lead">Built as a repeatable Power Query and Power BI workflow, with governance documents alongside the dashboard.</p><div class="workflow"><div class="step"><em>01</em><strong>Collect</strong><p>Integrate public and manually acquired municipality data.</p></div><div class="step"><em>02</em><strong>Validate</strong><p>Check keys, ranges, missing values and inconsistencies.</p></div><div class="step"><em>03</em><strong>Calculate</strong><p>Create ratios, indicators and component scores.</p></div><div class="step"><em>04</em><strong>Compare</strong><p>Explore rankings and assumptions in dashboards.</p></div><div class="step"><em>05</em><strong>Shortlist</strong><p>Identify candidates for local feasibility review.</p></div></div></div></section>
+    <section class="section tint" aria-labelledby="quality"><div class="container columns"><div><span class="eyebrow">04 / Data governance</span><h2 id="quality" class="display">Trust the inputs before the ranking.</h2><p class="section-lead">The project documents data acquisition and validation, particularly where some source figures were transcribed manually.</p><div class="tool-tags"><span>Data dictionary</span><span>Source register</span><span>Issue log</span><span>Data-quality rules</span><span>Lineage</span></div></div><ul class="checks"><li><strong>Unique municipality–year records</strong><br>Check keys and duplicated municipalities.</li><li><strong>Valid types and denominators</strong><br>Resolve calculation errors and missing population denominators.</li><li><strong>Capacity plausibility</strong><br>Flag ERPI user counts that exceed reported capacity.</li><li><strong>Manual acquisition risk</strong><br>Record source links, transcription checks and outstanding gaps.</li><li><strong>Comparable indicators</strong><br>Use rates and per-1,000-older-resident measures to avoid misleading raw comparisons.</li></ul></div></section>
+    <section class="section" aria-labelledby="outputs"><div class="container"><span class="eyebrow">05 / Outputs & limitations</span><h2 id="outputs" class="display">A shortlist, not a verdict.</h2><div class="columns"><div><p class="section-lead">The Power BI report brings together demographic pressure, provision gaps and a candidate shortlist. The intention is to make screening decisions explainable and easy to revisit.</p><p>Candidate rankings are sensitive to how indicators are defined, standardised and weighted. Local demand, staffing, transport, competition, operating costs and on-the-ground verification remain important next steps.</p></div><aside class="note"><strong>What this demonstrates</strong><p>Data integration, Power Query transformations, DAX measures, KPI design, validation logic, scoring transparency, dashboard design and the ability to translate analysis into a practical decision-support process.</p></aside></div>
+      <figure class="dashboard-showcase" id="executive-dashboard" aria-labelledby="dashboard-title">
+        <div class="dashboard-heading">
+          <div>
+            <span class="eyebrow">Actual Power BI report / 2024</span>
+            <h3 id="dashboard-title" class="display">Executive dashboard.</h3>
+            <p>Explore the project's real screening overview, including the ranked municipalities, demographic indicators and elderly-care provision measures.</p>
+          </div>
+          <a class="dashboard-open" href="Executive%20dashboard.png" target="_blank" rel="noopener noreferrer">Open full-size dashboard ↗</a>
+        </div>
+        <a class="dashboard-image-link gallery-trigger" href="Executive%20dashboard.png" target="_blank" rel="noopener noreferrer" aria-label="Open the actual Power BI executive dashboard in a new tab">
+          <img class="dashboard-image" src="Executive%20dashboard.png" width="1957" height="1179" loading="lazy" decoding="async" alt="Actual Power BI executive dashboard for 90 municipalities, showing 527K elderly residents, 26.9% elderly share, 38 municipalities passing screening, top ten candidate scores and ERPI provision against population ageing.">
+        </a>
+        <figcaption>Executive overview · 90 municipalities · 2024 reference year. The screening score highlights relative opportunities for further review; it does not establish commercial feasibility.</figcaption>
+      </figure>
+
+      <div class="dashboard-gallery-intro" id="powerbi-analysis">
+        <div>
+          <span class="eyebrow">Explore the Power BI analysis / 2024</span>
+          <h3 class="display">Behind the shortlist.</h3>
+          <p>Two complementary report pages show how demographic pressure, care provision and socioeconomic context were explored before making screening decisions.</p>
+        </div>
+        <span class="dashboard-gallery-hint">Select an image to enlarge ↗</span>
+      </div>
+      <div class="dashboard-gallery" aria-label="Power BI dashboard gallery">
+        <figure class="dashboard-gallery-card">
+          <a class="dashboard-image-link gallery-trigger" href="relationships_analysis.png" target="_blank" rel="noopener noreferrer" aria-label="Enlarge the actual Power BI demographic need and ERPI provision dashboard">
+            <img class="dashboard-image" src="relationships_analysis.png" width="2048" height="1156" loading="lazy" decoding="async" alt="Demographic Need and ERPI Provision dashboard showing 90 municipalities, elderly population, ERPI capacity per 1,000 older residents, municipalities classified as low provision, ERPI utilisation and comparative charts.">
+            <span class="image-action" aria-hidden="true">View full size ↗</span>
+          </a>
+          <figcaption>
+            <h4>Demographic Need &amp; ERPI Provision</h4>
+            <p>Examines population ageing alongside residential-care capacity, low-provision classifications and variation between municipalities. Includes the project's ERPI utilisation and weighted elderly population indicators.</p>
+          </figcaption>
+        </figure>
+        <figure class="dashboard-gallery-card">
+          <a class="dashboard-image-link gallery-trigger" href="socioeconomic_analysis.png" target="_blank" rel="noopener noreferrer" aria-label="Enlarge the actual Power BI socioeconomic analysis and municipal comparisons dashboard">
+            <img class="dashboard-image" src="socioeconomic_analysis.png" width="2048" height="1150" loading="lazy" decoding="async" alt="Socioeconomic Analysis and Municipal Comparisons dashboard showing median unemployment, RSI rate, property value, number of companies, distributions and scatter plots comparing municipalities.">
+            <span class="image-action" aria-hidden="true">View full size ↗</span>
+          </a>
+          <figcaption>
+            <h4>Socioeconomic Analysis &amp; Municipal Comparisons</h4>
+            <p>Compares unemployment, RSI rates, property values and business density through distributions and relationship charts, adding local context to the screening framework.</p>
+          </figcaption>
+        </figure>
+      </div>
+      <p class="dashboard-static-note">These are original, static Power BI screenshots, not interactive reports. The dashboards show analytical indicators; screening results are not a substitute for local feasibility research.</p>
+    </div></section>
+    <section class="cta"><div class="container"><span class="eyebrow">Explore the wider portfolio</span><h2>More than one way to make data useful.</h2><a href="index.html#work">← View all projects</a></div></section>
+  </main>
+  <div class="container"><footer class="footer"><span>© <span id="year">2026</span> Maria Pinto · Data Analytics & Data Science</span><a href="https://github.com/MariaPinto85" target="_blank" rel="noopener noreferrer">GitHub profile ↗</a></footer></div>
+  <dialog class="dashboard-lightbox" id="dashboard-lightbox" aria-label="Enlarged Power BI dashboard">
+    <div class="dashboard-lightbox-inner">
+      <div class="dashboard-lightbox-head"><span>Original Power BI dashboard screenshot</span><form method="dialog"><button class="dashboard-lightbox-close" type="submit">Close image ×</button></form></div>
+      <img id="dashboard-lightbox-img" alt="" width="2048" height="1156">
+      <p>Press Escape or choose Close image to return to the case study.</p>
+    </div>
+  </dialog>
+  <script>
+  (() => {
+    const dialog=document.getElementById('dashboard-lightbox');
+    const enlarged=document.getElementById('dashboard-lightbox-img');
+    if (!dialog || typeof dialog.showModal !== 'function') return;
+    let opener=null;
+    document.querySelectorAll('a.gallery-trigger').forEach(link => {
+      link.addEventListener('click', e => {
+        if(e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+        e.preventDefault();
+        opener=link;
+        const img=link.querySelector('img');
+        enlarged.src=link.getAttribute('href');
+        enlarged.alt=img?.alt || '';
+        dialog.showModal();
+      });
+    });
+    dialog.addEventListener('click', e => { if(e.target === dialog) dialog.close(); });
+    dialog.addEventListener('close', () => { enlarged.removeAttribute('src'); if (opener) opener.focus(); });
+  })();
+  </script>
+
+  <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+  <!-- Self-contained EN / PT-PT translations: no additional JS file is needed. -->
+  <script>
+/* Maria Pinto portfolio — Portuguese (Portugal) / English translations.
+   Source copy remains in HTML; these are authored pt-PT translations (no third-party API). */
+(() => {
+  'use strict';
+  const glossary = {
+  "Portfolio": "Portefólio",
+  "About": "Sobre mim",
+  "Contact": "Contacto",
+  "Business intelligence": "Inteligência de negócio",
+  "Machine learning": "Aprendizagem automática",
+  "Geospatial": "Geoespacial",
+  "Forecasting": "Previsão",
+  "Demographic need": "Necessidade demográfica",
+  "Provision gap": "Défice de oferta",
+  "Socioeconomics": "Contexto socioeconómico",
+  "Socioeconomic context": "Contexto socioeconómico",
+  "Data quality": "Qualidade dos dados",
+  "Data analysis": "Análise de dados",
+  "Data validation": "Validação de dados",
+  "Decision support": "Apoio à decisão",
+  "KPI design": "Definição de indicadores",
+  "Geospatial analysis": "Análise geoespacial",
+  "Time series": "Séries temporais",
+  "Healthcare": "Saúde",
+  "Modelling & mapping": "Modelação e cartografia",
+  "GitHub profile ↗": "Perfil no GitHub ↗",
+  "90 municipalities": "90 municípios",
+  "90 Portuguese municipalities": "90 municípios portugueses",
+  "Portugal · 2024": "Portugal · 2024"
+};
+  const pageTranslations = {
+    index: {
+  "Skip to projects": "Ir para os projetos",
+  "Work": "Projetos",
+  "Skills": "Competências",
+  "Maria Pinto · Selected work": "Maria Pinto · Projetos selecionados",
+  "Hello, welcome": "Bem-vindo",
+  "to my portfolio.": "ao meu portefólio.",
+  "I turn complex data into": "Transformo dados complexos em",
+  "clear, defensible decisions": "decisões claras e fundamentadas",
+  "through analytics, business intelligence, modelling and geospatial thinking.": "através da análise de dados, inteligência de negócio, modelação e análise geoespacial.",
+  "Curiosity → Evidence → Insight": "Curiosidade → Evidência → Conhecimento",
+  "Featured project / 01": "Projeto em destaque / 01",
+  "Where is care": "Onde são mais",
+  "needed most?": "necessários os cuidados?",
+  "A decision-support analysis of": "Uma análise de apoio à decisão em",
+  ", bringing together demographic pressure, elderly-care capacity and socioeconomic indicators.": ", que cruza pressão demográfica, capacidade de resposta para pessoas idosas e indicadores socioeconómicos.",
+  "Municipality screening": "Avaliação preliminar de municípios",
+  "Demographic need · Provision gap · Socioeconomics": "Necessidade demográfica · Défice de oferta · Contexto socioeconómico",
+  "Illustrative graphic, not project results": "Ilustração conceptual, não representa resultados",
+  "Explore the case study": "Explorar o estudo de caso",
+  "Focus": "Foco",
+  "Data analytics & BI": "Análise de dados e BI",
+  "Approach": "Abordagem",
+  "Quality before conclusions": "Qualidade antes das conclusões",
+  "Perspective": "Perspetiva",
+  "Mathematics meets practice": "Da matemática à prática",
+  "01 / Portfolio": "01 / Portefólio",
+  "Selected work.": "Projetos selecionados.",
+  "Projects that connect the technical work to a question worth answering, with transparency about methods and limitations.": "Projetos que aplicam competências técnicas a questões relevantes, com transparência quanto aos métodos e às limitações.",
+  "Case study · Business intelligence": "Estudo de caso · Inteligência de negócio",
+  "01 / Featured": "01 / Destaque",
+  "municipalities.": "municípios.",
+  "One question.": "Uma questão.",
+  "Elderly-care opportunity screening": "Avaliação de oportunidades em serviços para pessoas idosas",
+  "Built an analytical screening framework for municipalities in central Portugal using demographic, service-provision and socioeconomic indicators. The workflow incorporates data-quality checks, transparent scoring and a candidate shortlist for further feasibility assessment.": "Desenvolvi um modelo de avaliação preliminar de municípios no centro de Portugal, com indicadores demográficos, da oferta de serviços e socioeconómicos. O processo inclui verificações da qualidade dos dados, pontuações transparentes e uma lista de candidatos para posterior análise de viabilidade.",
+  "Read the full case study": "Ler o estudo de caso completo",
+  "The score is a screening tool; local feasibility requires further validation.": "A pontuação é uma ferramenta de triagem; a viabilidade local requer validação adicional.",
+  "Explore all projects": "Explorar todos os projetos",
+  "All work": "Todos",
+  "Decision support / 01": "Apoio à decisão / 01",
+  "90 municipalities.": "90 municípios.",
+  "One shortlist.": "Uma lista de candidatos.",
+  "Provision gap": "Défice de oferta",
+  "01 / Business intelligence · Spatial decision support": "01 / Inteligência de negócio · Apoio à decisão territorial",
+  "Elderly-care municipality screening": "Avaliação preliminar de municípios para cuidados a pessoas idosas",
+  "Screening 90 Portuguese municipalities using ageing indicators, elderly-care service capacity and socioeconomic context. Built in Power BI with documented data-quality rules, weighted scoring and a candidate shortlist for feasibility review.": "Avaliação de 90 municípios portugueses com indicadores de envelhecimento, capacidade dos serviços para pessoas idosas e contexto socioeconómico. Desenvolvida em Power BI, com regras documentadas de qualidade dos dados, pontuação ponderada e lista de candidatos para avaliação de viabilidade.",
+  "Read case study": "Ler estudo de caso",
+  "02 / Machine learning · Analytics": "02 / Aprendizagem automática · Análise de dados",
+  "Customer churn prediction": "Previsão de abandono de clientes",
+  "Investigating customer retention and churn patterns through exploratory analysis, predictive modelling and visual reporting.": "Estudo dos padrões de retenção e abandono de clientes através de análise exploratória, modelação preditiva e relatórios visuais.",
+  "Explore repository": "Ver repositório",
+  "03 / Geospatial · Machine learning": "03 / Análise geoespacial · Aprendizagem automática",
+  "Landslide susceptibility analysis": "Análise da suscetibilidade a deslizamentos de terras",
+  "Exploring how geospatial information and machine learning can support the identification of areas susceptible to landslides.": "Exploração do contributo dos dados geoespaciais e da aprendizagem automática para identificar zonas suscetíveis a deslizamentos de terras.",
+  "04 / Health data · Modelling": "04 / Dados de saúde · Modelação",
+  "Liver disease prediction": "Previsão de doenças hepáticas",
+  "Using clinical data to examine predictive patterns, compare modelling approaches and consider the limits of model-based risk estimates.": "Utilização de dados clínicos para estudar padrões preditivos, comparar abordagens de modelação e analisar os limites das estimativas de risco baseadas em modelos.",
+  "05 / Time series · Forecasting": "05 / Séries temporais · Previsão",
+  "Solar energy forecasting": "Previsão de produção de energia solar",
+  "Analysing solar and weather time series, engineering temporal features and investigating approaches to forecasting power generation.": "Análise de séries temporais solares e meteorológicas, criação de variáveis temporais e estudo de abordagens para prever a produção de energia.",
+  "02 / About": "02 / Sobre mim",
+  "A curious mind.": "Uma mente curiosa.",
+  "A practical lens.": "Uma visão prática.",
+  "I am Maria Pinto, a data professional with an MSc in Mathematics and a strong interest in business intelligence, statistical modelling and geospatial analysis.": "Sou Maria Pinto, profissional da área dos dados, com mestrado em Matemática e especial interesse em inteligência de negócio, modelação estatística e análise geoespacial.",
+  "My work focuses on making complex evidence more useful: structuring datasets, checking assumptions, building meaningful indicators and communicating results in a way people can act on.": "O meu trabalho procura tornar a informação complexa mais útil: estruturar conjuntos de dados, testar pressupostos, construir indicadores relevantes e comunicar resultados que apoiem a ação.",
+  "Start with the question.": "Começar pela questão.",
+  "Define the decision, audience and relevant measures before choosing a model or dashboard.": "Definir a decisão, o público-alvo e os indicadores relevantes antes de escolher um modelo ou painel de análise.",
+  "Make the data trustworthy.": "Garantir a fiabilidade dos dados.",
+  "Document sources, validate records and keep limitations visible throughout the analysis.": "Documentar fontes, validar registos e manter as limitações visíveis ao longo da análise.",
+  "Tell the story clearly.": "Comunicar com clareza.",
+  "Turn technical findings into accessible visuals, transparent trade-offs and practical recommendations.": "Transformar conclusões técnicas em visualizações acessíveis, escolhas transparentes e recomendações práticas.",
+  "03 / Toolkit": "03 / Ferramentas",
+  "What I work with.": "As minhas ferramentas.",
+  "Analytics & reporting": "Análise e reporting",
+  "Power BI · DAX · Power Query · Excel · KPI design · Data visualisation · Quality checks": "Power BI · DAX · Power Query · Excel · Definição de indicadores · Visualização de dados · Verificações de qualidade",
+  "Programming & data": "Programação e dados",
+  "Python · Pandas · NumPy · PostgreSQL · Jupyter · Exploratory data analysis · Data cleaning": "Python · Pandas · NumPy · PostgreSQL · Jupyter · Análise exploratória de dados · Limpeza de dados",
+  "Statistics · Predictive modelling · Time-series analysis · Machine learning · QGIS · Geospatial analysis": "Estatística · Modelação preditiva · Análise de séries temporais · Aprendizagem automática · QGIS · Análise geoespacial",
+  "04 / Community": "04 / Comunidade",
+  "Work beyond the dashboard.": "Para além dos dashboards.",
+  "Volunteer mapping": "Cartografia voluntária",
+  "YouthMappers · Unmapped Kenya": "YouthMappers · Unmapped Kenya",
+  "Verified AI-predicted building and road geometries for Nyeri (Town) Sub-County using RapiD and JOSM, with an emphasis on alignment and mapping quality.": "Validei geometrias de edifícios e estradas previstas por IA no subcondado de Nyeri (Town), utilizando RapiD e JOSM, com especial atenção ao alinhamento e à qualidade cartográfica.",
+  "Volunteer technical support": "Apoio técnico voluntário",
+  "Worked with Google Maps API, geocoding and boundary workflows, and helped translate technical tools into usable instructions for non-technical teams.": "Trabalhei com a API do Google Maps, geocodificação e processos de delimitação geográfica, ajudando a traduzir ferramentas técnicas em instruções acessíveis a equipas não técnicas.",
+  "05 / Get in touch": "05 / Contacto",
+  "Let's make sense": "Vamos dar sentido",
+  "of the data.": "aos dados.",
+  "Interested in data analytics, BI, research or collaborative projects? Explore my work or reach out through LinkedIn.": "Tem interesse em análise de dados, BI, investigação ou projetos de colaboração? Explore o meu trabalho ou contacte-me através do LinkedIn.",
+  "Connect on LinkedIn": "Contactar pelo LinkedIn",
+  "View my CV": "Ver o meu CV",
+  "Maria Pinto. Made with care and curiosity.": "Maria Pinto. Criado com rigor e curiosidade.",
+  "Back to top ↑": "Voltar ao início ↑"
+},
+    municipality: {
+  "Projects": "Projetos",
+  "← Back to portfolio": "← Voltar ao portefólio",
+  "Case study / Business intelligence · Portugal": "Estudo de caso / Inteligência de negócio · Portugal",
+  "Where is elderly care needed most?": "Onde são mais necessários os cuidados a pessoas idosas?",
+  "A transparent screening framework to compare": "Um modelo de avaliação preliminar transparente para comparar",
+  "and identify where further investigation of elderly-care services may be warranted.": "e identificar onde poderá justificar-se uma análise mais aprofundada da oferta de serviços para pessoas idosas.",
+  "Power BI · Power Query · DAX · Data governance · Spatial decision support": "Power BI · Power Query · DAX · Governação de dados · Apoio à decisão territorial",
+  "Screening framework": "Modelo de avaliação preliminar",
+  "2024 snapshot": "Dados de 2024",
+  "municipalities": "municípios",
+  "under review.": "em análise.",
+  "Conceptual illustration — not project results": "Ilustração conceptual — não representa resultados do projeto",
+  "Coverage": "Abrangência",
+  "Data period": "Período dos dados",
+  "2024 dataset": "Dados de 2024",
+  "Output": "Resultado",
+  "Prioritised candidate screening": "Lista priorizada de candidatos",
+  "01 / The question": "01 / A questão",
+  "Turning a broad problem into a decision.": "Transformar um problema amplo numa decisão.",
+  "An ageing population does not, on its own, prove where a new elderly-care service should open. A useful first step is to compare need, existing provision and local context in a consistent way.": "O envelhecimento da população não permite, por si só, determinar onde deve abrir um novo serviço para pessoas idosas. Um primeiro passo útil consiste em comparar, de forma consistente, a necessidade, a oferta existente e o contexto local.",
+  "Objective:": "Objetivo:",
+  "rank municipalities for more detailed exploration — not claim that any one municipality is already a commercially viable location.": "ordenar os municípios para uma análise posterior mais aprofundada, sem afirmar que algum deles constitui, desde já, uma localização comercialmente viável.",
+  "Unit of analysis:": "Unidade de análise:",
+  "one record per municipality, combining demographic, infrastructure and socioeconomic information into a documented analytical dataset.": "um registo por município, que reúne informação demográfica, de infraestruturas e socioeconómica num conjunto de dados analítico documentado.",
+  "02 / Scoring framework": "02 / Modelo de pontuação",
+  "Three dimensions, one shortlist.": "Três dimensões, uma lista de candidatos.",
+  "The model separates underlying need from gaps in current provision. Components are combined in a weighted screening score, with assumptions exposed for review.": "O modelo distingue a necessidade existente das lacunas na oferta atual. As componentes são combinadas numa pontuação ponderada de avaliação preliminar, com pressupostos explícitos e passíveis de revisão.",
+  "DIMENSION 01": "DIMENSÃO 01",
+  "Older population share, ageing index, elderly population and population trends help describe where age-related pressure may be higher.": "A percentagem de população idosa, o índice de envelhecimento, a população idosa e as tendências demográficas ajudam a identificar onde a pressão associada ao envelhecimento poderá ser maior.",
+  "DIMENSION 02": "DIMENSÃO 02",
+  "ERPI, day-centre and home-support (SAD) capacity are considered relative to the older population, rather than relying on raw facility counts alone.": "A capacidade das ERPI, dos centros de dia e do Serviço de Apoio Domiciliário (SAD) é analisada em relação à população idosa, em vez de utilizar apenas o número absoluto de respostas.",
+  "DIMENSION 03": "DIMENSÃO 03",
+  "Local economic and infrastructure indicators add context to potential need and highlight where feasibility must be examined further.": "Os indicadores económicos locais e de infraestruturas contextualizam as necessidades potenciais e assinalam onde é necessário aprofundar a análise de viabilidade.",
+  "03 / Analytical process": "03 / Processo analítico",
+  "From raw data to review candidates.": "Dos dados brutos aos municípios candidatos.",
+  "Built as a repeatable Power Query and Power BI workflow, with governance documents alongside the dashboard.": "Desenvolvido como um processo repetível em Power Query e Power BI, com documentação de governação de dados que acompanha o dashboard.",
+  "Collect": "Recolher",
+  "Integrate public and manually acquired municipality data.": "Integrar dados municipais públicos e recolhidos manualmente.",
+  "Validate": "Validar",
+  "Check keys, ranges, missing values and inconsistencies.": "Verificar chaves, intervalos, valores em falta e inconsistências.",
+  "Calculate": "Calcular",
+  "Create ratios, indicators and component scores.": "Calcular rácios, indicadores e pontuações por componente.",
+  "Compare": "Comparar",
+  "Explore rankings and assumptions in dashboards.": "Analisar ordenações e pressupostos nos dashboards.",
+  "Shortlist": "Selecionar",
+  "Identify candidates for local feasibility review.": "Identificar candidatos para avaliação de viabilidade local.",
+  "04 / Data governance": "04 / Governação de dados",
+  "Trust the inputs before the ranking.": "Validar os dados antes de ordenar os municípios.",
+  "The project documents data acquisition and validation, particularly where some source figures were transcribed manually.": "O projeto documenta a recolha e validação de dados, em especial quando alguns valores das fontes foram transcritos manualmente.",
+  "Data dictionary": "Dicionário de dados",
+  "Source register": "Registo de fontes",
+  "Issue log": "Registo de problemas",
+  "Data-quality rules": "Regras de qualidade dos dados",
+  "Lineage": "Rastreabilidade",
+  "Unique municipality–year records": "Registos únicos por município e ano",
+  "Check keys and duplicated municipalities.": "Verificar as chaves e eventuais municípios duplicados.",
+  "Valid types and denominators": "Tipos de dados e denominadores válidos",
+  "Resolve calculation errors and missing population denominators.": "Resolver erros de cálculo e valores em falta nos denominadores populacionais.",
+  "Capacity plausibility": "Plausibilidade da capacidade",
+  "Flag ERPI user counts that exceed reported capacity.": "Assinalar situações em que o número de utentes das ERPI excede a capacidade declarada.",
+  "Manual acquisition risk": "Risco da recolha manual",
+  "Record source links, transcription checks and outstanding gaps.": "Registar ligações às fontes, verificações de transcrição e lacunas por resolver.",
+  "Comparable indicators": "Indicadores comparáveis",
+  "Use rates and per-1,000-older-resident measures to avoid misleading raw comparisons.": "Utilizar taxas e indicadores por 1 000 residentes idosos para evitar comparações enganadoras de valores absolutos.",
+  "05 / Outputs & limitations": "05 / Resultados e limitações",
+  "A shortlist, not a verdict.": "Uma lista de candidatos, não uma decisão definitiva.",
+  "The Power BI report brings together demographic pressure, provision gaps and a candidate shortlist. The intention is to make screening decisions explainable and easy to revisit.": "O relatório em Power BI reúne a pressão demográfica, os défices de oferta e uma lista de municípios candidatos. O objetivo é tornar as decisões de avaliação preliminar explicáveis e fáceis de rever.",
+  "Candidate rankings are sensitive to how indicators are defined, standardised and weighted. Local demand, staffing, transport, competition, operating costs and on-the-ground verification remain important next steps.": "A ordenação dos municípios depende da definição, normalização e ponderação dos indicadores. A procura local, os recursos humanos, os transportes, a concorrência, os custos operacionais e a verificação no terreno continuam a ser etapas essenciais.",
+  "What this demonstrates": "Competências demonstradas",
+  "Data integration, Power Query transformations, DAX measures, KPI design, validation logic, scoring transparency, dashboard design and the ability to translate analysis into a practical decision-support process.": "Integração de dados, transformações em Power Query, medidas DAX, definição de indicadores, lógica de validação, transparência da pontuação, conceção de dashboards e capacidade de transformar a análise num processo prático de apoio à decisão.",
+  "Explore the Power BI analysis / 2024": "Explorar a análise em Power BI / 2024",
+  "Behind the shortlist.": "Por detrás da seleção de municípios.",
+  "Two complementary report pages show how demographic pressure, care provision and socioeconomic context were explored before making screening decisions.": "Duas páginas complementares do relatório mostram como a pressão demográfica, a oferta de cuidados e o contexto socioeconómico foram analisados antes da avaliação dos municípios candidatos.",
+  "Select an image to enlarge ↗": "Selecione uma imagem para ampliar ↗",
+  "View full size ↗": "Ver em tamanho original ↗",
+  "Demographic Need & ERPI Provision": "Necessidade demográfica e oferta de ERPI",
+  "Examines population ageing alongside residential-care capacity, low-provision classifications and variation between municipalities. Includes the project's ERPI utilisation and weighted elderly population indicators.": "Analisa o envelhecimento da população em conjunto com a capacidade de resposta residencial, a classificação dos municípios com baixa oferta e as diferenças entre municípios. Inclui indicadores de utilização das ERPI e da proporção ponderada de população idosa.",
+  "Socioeconomic Analysis & Municipal Comparisons": "Análise socioeconómica e comparação entre municípios",
+  "Compares unemployment, RSI rates, property values and business density through distributions and relationship charts, adding local context to the screening framework.": "Compara as taxas de desemprego, a proporção de beneficiários do RSI, os valores imobiliários e a densidade empresarial através de distribuições e gráficos de relações, acrescentando contexto local ao modelo de avaliação preliminar.",
+  "These are original, static Power BI screenshots, not interactive reports. The dashboards show analytical indicators; screening results are not a substitute for local feasibility research.": "Estas são capturas de ecrã reais e estáticas do Power BI, não relatórios interativos. Os dashboards apresentam indicadores analíticos; os resultados da avaliação preliminar não substituem um estudo de viabilidade local.",
+  "Original Power BI dashboard screenshot": "Captura de ecrã original do dashboard em Power BI",
+  "Close image ×": "Fechar imagem ×",
+  "Press Escape or choose Close image to return to the case study.": "Prima Escape ou selecione Fechar imagem para regressar ao estudo de caso.",
+  "Actual Power BI report / 2024": "Relatório real em Power BI / 2024",
+  "Executive dashboard.": "Dashboard executivo.",
+  "Explore the project's real screening overview, including the ranked municipalities, demographic indicators and elderly-care provision measures.": "Explore o dashboard real de avaliação preliminar, incluindo a ordenação dos municípios, os indicadores demográficos e as medidas de oferta de serviços para pessoas idosas.",
+  "Open full-size dashboard ↗": "Abrir dashboard em tamanho original ↗",
+  "Executive overview · 90 municipalities · 2024 reference year. The screening score highlights relative opportunities for further review; it does not establish commercial feasibility.": "Visão geral executiva · 90 municípios · ano de referência de 2024. A pontuação de avaliação preliminar identifica oportunidades relativas para análise posterior; não comprova a viabilidade comercial.",
+  "Explore the wider portfolio": "Explorar o portefólio completo",
+  "More than one way to make data useful.": "Diferentes formas de criar valor com dados.",
+  "← View all projects": "← Ver todos os projetos",
+  "Maria Pinto · Data Analytics & Data Science": "Maria Pinto · Análise de Dados e Ciência de Dados"
+}
+  };
+  const attributes = {
+  "Language": "Idioma",
+  "View this page in English": "Ver esta página em inglês",
+  "View this page in European Portuguese": "Ver esta página em português de Portugal",
+  "Portfolio introduction": "Introdução ao portefólio",
+  "Main navigation": "Navegação principal",
+  "Maria Pinto, back to top": "Maria Pinto, voltar ao início",
+  "Portfolio highlights": "Destaques do portefólio",
+  "Illustrative project graphic: 90 municipalities and three screening dimensions": "Ilustração conceptual do projeto: 90 municípios e três dimensões de avaliação",
+  "Filter projects by area": "Filtrar projetos por área",
+  "Conceptual illustration of the municipality screening framework using demographic need, provision gap and socioeconomic context; not actual analysis results": "Ilustração conceptual do modelo de avaliação preliminar dos municípios, com necessidade demográfica, défice de oferta e contexto socioeconómico; não representa resultados reais",
+  "Customer churn analytics project dashboard illustration": "Ilustração de um dashboard do projeto de análise de abandono de clientes",
+  "Terrain visualisation illustrating a landslide susceptibility study": "Visualização de terreno ilustrativa de um estudo de suscetibilidade a deslizamentos de terras",
+  "Clinical data science and liver disease analysis illustration": "Ilustração de análise de dados clínicos e doenças hepáticas",
+  "Solar power generation and time-series forecasting illustration": "Ilustração de produção solar e previsão com séries temporais",
+  "Power BI dashboard gallery": "Galeria dos dashboards do Power BI",
+  "Enlarged Power BI dashboard": "Dashboard do Power BI ampliado",
+  "Enlarge the actual Power BI demographic need and ERPI provision dashboard": "Ampliar o dashboard real do Power BI sobre necessidade demográfica e oferta de ERPI",
+  "Enlarge the actual Power BI socioeconomic analysis and municipal comparisons dashboard": "Ampliar o dashboard real do Power BI sobre análise socioeconómica e comparação entre municípios",
+  "Demographic Need and ERPI Provision dashboard showing 90 municipalities, elderly population, ERPI capacity per 1,000 older residents, municipalities classified as low provision, ERPI utilisation and comparative charts.": "Dashboard sobre necessidade demográfica e oferta de ERPI, com 90 municípios, população idosa, capacidade de ERPI por 1 000 idosos, municípios classificados com baixa oferta, utilização das ERPI e gráficos comparativos.",
+  "Socioeconomic Analysis and Municipal Comparisons dashboard showing median unemployment, RSI rate, property value, number of companies, distributions and scatter plots comparing municipalities.": "Dashboard de análise socioeconómica e comparação entre municípios com mediana da taxa de desemprego, proporção de beneficiários do RSI, valor imobiliário, número de empresas, distribuições e diagramas de dispersão.",
+  "Open the actual Power BI executive dashboard in a new tab": "Abrir o dashboard executivo real do Power BI num novo separador",
+  "Actual Power BI executive dashboard for 90 municipalities, showing 527K elderly residents, 26.9% elderly share, 38 municipalities passing screening, top ten candidate scores and ERPI provision against population ageing.": "Dashboard executivo real em Power BI para 90 municípios, com 527 mil residentes idosos, 26,9% de população idosa, 38 municípios que passaram a avaliação preliminar, as dez maiores pontuações e a relação entre oferta de ERPI e envelhecimento da população.",
+  "Site navigation": "Navegação do site",
+  "Conceptual project illustration: 90 municipalities screened across demographic need, service provision gap and socioeconomic context; not a real dashboard or ranking": "Ilustração conceptual do projeto: avaliação de 90 municípios segundo necessidade demográfica, défice de oferta e contexto socioeconómico; não é um dashboard nem uma classificação real"
+};
+  const meta = {
+  "index": {
+    "title": "Maria Pinto | Análise de Dados e Ciência de Dados",
+    "description": "Portefólio de Maria Pinto: análise de dados, inteligência de negócio, modelação preditiva e análise geoespacial. Conheça os projetos e estudos de caso."
+  },
+  "municipality": {
+    "title": "Avaliação preliminar de municípios | Maria Pinto",
+    "description": "Estudo de caso: avaliação de 90 municípios portugueses para identificar oportunidades em serviços para pessoas idosas, com Power BI, indicadores demográficos e controlos de qualidade dos dados."
+  }
+};
+  const page = document.body.dataset.page === 'municipality' ? 'municipality' : 'index';
+  const translations = {...glossary, ...pageTranslations[page]};
+  const storageKey = 'maria-portfolio-language';
+
+  // Snapshot the original English text and accessibility labels before switching.
+  const nodes = [];
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if (node.parentElement?.closest('script, style, .language-switch')) return NodeFilter.FILTER_REJECT;
+      return node.nodeValue.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    }
+  });
+  let node;
+  while ((node = walker.nextNode())) {
+    const source = node.nodeValue;
+    nodes.push({node, source, key: source.trim().replace(/\s+/g, ' ')});
+  }
+
+  const labelled = Array.from(document.querySelectorAll('[aria-label], [alt], [title]'))
+    .flatMap(el => ['aria-label', 'alt', 'title']
+      .filter(attr => el.hasAttribute(attr))
+      .map(attr => ({el, attr, source: el.getAttribute(attr)})));
+
+  const titleEn = document.title;
+  const descriptionEl = document.querySelector('meta[name="description"]');
+  const descriptionEn = descriptionEl?.content;
+  const buttons = Array.from(document.querySelectorAll('.lang-button'));
+
+  function setLanguage(lang, persist) {
+    const isPt = lang === 'pt-PT';
+    const locale = isPt ? 'pt-PT' : 'en';
+    document.documentElement.lang = locale;
+    nodes.forEach(({node, source, key}) => {
+      const replacement = isPt ? (translations[key] ?? key) : key;
+      const leading = source.match(/^\s*/)[0];
+      const trailing = source.match(/\s*$/)[0];
+      node.nodeValue = leading + replacement + trailing;
+    });
+    labelled.forEach(({el, attr, source}) => {
+      el.setAttribute(attr, isPt ? (attributes[source] ?? source) : source);
+    });
+    document.title = isPt ? meta[page].title : titleEn;
+    if (descriptionEl) descriptionEl.content = isPt ? meta[page].description : descriptionEn;
+    buttons.forEach(button => {
+      const active = button.dataset.lang === locale;
+      button.setAttribute('aria-pressed', String(active));
+    });
+    if (persist) {
+      try { localStorage.setItem(storageKey, locale); } catch (_) { /* Private browsing */ }
+    }
+  }
+
+  buttons.forEach(button => button.addEventListener('click', () => setLanguage(button.dataset.lang, true)));
+  let savedLanguage = 'en';
+  try { savedLanguage = localStorage.getItem(storageKey) === 'pt-PT' ? 'pt-PT' : 'en'; } catch (_) { /* Private browsing */ }
+  setLanguage(savedLanguage, false);
+})();
+
+  </script>
+</body>
+</html>
